@@ -57,6 +57,7 @@ public class ResolutionController {
 	@PutMapping("/resolution/{id}/complete")
 	@Transactional
 	@PreAuthorize("hasAuthority('resolution:write')")
+	@PostAuthorize("@post.authorize(#root)")
 	public Optional<Resolution> complete(@PathVariable("id") UUID id) {
 		this.resolutions.complete(id);
 		return read(id);
