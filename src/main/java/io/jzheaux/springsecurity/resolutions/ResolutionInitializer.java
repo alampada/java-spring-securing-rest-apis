@@ -33,6 +33,10 @@ public class ResolutionInitializer implements SmartInitializingSingleton {
 		haswrite.grantAuthority("resolution:write");
 		this.users.save(haswrite);
 
+		User admin = new User("admin","{bcrypt}$2a$10$bTu5ilpT4YILX8dOWM/05efJnoSlX4ElNnjhNopL9aPoRyUgvXAYa");
+		admin.grantAuthority("ROLE_ADMIN");
+		this.users.save(admin);
+
 		this.resolutions.save(new Resolution("Read War and Peace", "user"));
 		this.resolutions.save(new Resolution("Free Solo the Eiffel Tower", "user"));
 		this.resolutions.save(new Resolution("Hang Christmas Lights", "user"));
