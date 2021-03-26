@@ -2,6 +2,7 @@ package io.jzheaux.springsecurity.resolutions;
 
 import java.io.Serializable;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.UUID;
@@ -32,6 +33,8 @@ public class User implements Serializable {
 		this.enabled = user.enabled;
 		this.userAuthorities = user.userAuthorities;
 		this.fullName = user.fullName;
+		this.subscription = user.subscription;
+		this.friends = user.friends;
 	}
 
 	@Id
@@ -50,8 +53,14 @@ public class User implements Serializable {
 	@Column(name = "full_name")
 	protected String fullName;
 
+	@Column
+	String subscription;
+
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+	Collection<User> friends = new ArrayList<>();
+
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	Collection<UserAuthority> userAuthorities = new ArrayDeque<>();
+	Collection<UserAuthority> userAuthorities = new ArrayList<>();
 
 	public UUID getId() {
 		return id;
@@ -91,6 +100,22 @@ public class User implements Serializable {
 
 	void setFullName(String fullName) {
 		this.fullName = fullName;
+	}
+
+	String getSubscription() {
+		return subscription;
+	}
+
+	void setSubscription(String subscription) {
+		this.subscription = subscription;
+	}
+
+	Collection<User> getFriends() {
+		return friends;
+	}
+
+	void addFriend(User friend) {
+		friends.add(friend);
 	}
 
 	public Collection<UserAuthority> getUserAuthorities() {
