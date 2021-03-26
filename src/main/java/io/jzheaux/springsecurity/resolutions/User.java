@@ -31,6 +31,7 @@ public class User implements Serializable {
 		this.password = user.password;
 		this.enabled = user.enabled;
 		this.userAuthorities = user.userAuthorities;
+		this.fullName = user.fullName;
 	}
 
 	@Id
@@ -45,6 +46,9 @@ public class User implements Serializable {
 
 	@Column
 	protected boolean enabled = true;
+
+	@Column(name = "full_name")
+	protected String fullName;
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	Collection<UserAuthority> userAuthorities = new ArrayDeque<>();
@@ -79,6 +83,14 @@ public class User implements Serializable {
 
 	public  void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	String getFullName() {
+		return fullName;
+	}
+
+	void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public Collection<UserAuthority> getUserAuthorities() {
